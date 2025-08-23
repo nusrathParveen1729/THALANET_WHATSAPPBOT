@@ -8,7 +8,7 @@ from openai import OpenAI
 from twilio.twiml.messaging_response import MessagingResponse
 
 # -------------------------------------------------
-# Boot#
+# Boot
 # -------------------------------------------------
 load_dotenv()
 PORT = int(os.getenv("PORT", 5000))
@@ -412,3 +412,7 @@ def webhook():
 
     sessions[from_number] = session
     return twiml_reply("I didn’t catch that. Reply 1 for Donor or 2 for Require Blood.")
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=PORT, debug=True)
