@@ -8,7 +8,7 @@ from openai import OpenAI
 from twilio.twiml.messaging_response import MessagingResponse
 
 # -------------------------------------------------
-# Boot##
+# Boot#
 # -------------------------------------------------
 load_dotenv()
 PORT = int(os.getenv("PORT", 5000))
@@ -207,7 +207,7 @@ def ai_extract(user_msg: str, profile_name: str, session_state: dict, client, PR
     )
 
 # -------------------------------------------------
-# Database Queries#
+# Database Queries
 # -------------------------------------------------
 def insert_donor(payload):
     conn = get_db_conn()
@@ -285,8 +285,9 @@ def webhook():
             "👋 Hi, how may I help you?\n\n"
             "Please classify yourself:\n"
             "1️⃣ Donor (Eligible for Govt. tax benefit 💸)\n"
-            "2️⃣ Require Blood (Recipient Request)\n\n"
-            "👉 Reply with 1 or 2 to continue."
+            "2️⃣ Require Blood (Recipient Request)\n"
+            "3️⃣ FAQ (Frequently Asked Questions)\n\n"
+            "👉 Reply with 1, 2 or 3 to continue."
         )
 
     # --- Choose role (supports numbers or words) ---
@@ -302,8 +303,33 @@ def webhook():
             session["step"] = "collect"
             sessions[from_number] = session
             return twiml_reply("🆘 Okay! Making a Blood Request.\nYou can reply naturally (e.g., 'Need AB- in Hyderabad').")
+        elif b in {"3", "faq"}:
+            faq_questions = [
+                {"id": "A", "title": "A. What is Thalassemia"},
+                {"id": "B", "title": "B. Is Thalassemia curable?"},
+                {"id": "C", "title": "C. Why do Thalassemia patients need frequent blood transfusions?"},
+                {"id": "D", "title": "D. Can Thalassemia be prevented?"},
+                {"id": "E", "title": "E. Do blood donors get any government benefits?"},
+            ]
+            faq_list = "\n".join([q["title"] for q in faq_questions])
+            faq_msg = (
+                "📝 FAQs:\n"
+                f"{faq_list}\n\n"
+                "Reply with A, B, C, D, or E to see the answer."
+            )
+            return twiml_reply(faq_msg)
         else:
-            return twiml_reply("⚠ Invalid choice.\nReply 1 for Donor or 2 for Request.")
+            return twiml_reply("⚠ Invalid choice.\nReply 1 for Donor, 2 for Request, or 3 for FAQ.")
+    # --- FAQ Answers ---
+    faq_answers = {
+        "A": "A. Thalassemia is an inherited blood disorder where the body cannot make enough healthy red blood cells and hemoglobin, leading to anemia.",
+        "B": "B. There is no permanent cure for most patients, but treatments like regular blood transfusions, iron chelation, and in some cases bone marrow transplant can manage or cure it.",
+        "C": "C. Their body cannot produce enough healthy hemoglobin, so transfusions are needed every 2–4 weeks to survive and stay healthy.",
+        "D": "D. Yes. Carrier screening and genetic counseling before marriage or childbirth can prevent passing the disorder to children.",
+        "E": "E. Yes ✅. In many places, regular blood donors may receive government-recognized tax benefits, health checkups, and certificates of appreciation.",
+    }
+    if body.strip().upper() in faq_answers:
+        return twiml_reply(faq_answers[body.strip().upper()])
 
     # --- Let AI parse the message, then fill missing fields ---
     ai, used_model = ai_extract(body, profile_name, session, client, PREFERRED_MODEL)
