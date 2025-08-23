@@ -284,7 +284,7 @@ def webhook():
         return twiml_reply(
             "👋 Hi, how may I help you?\n\n"
             "Please classify yourself:\n"
-            "1️⃣ Donor\n"
+            "1️⃣ Donor (Eligible for Govt. tax benefit 💸)\n"
             "2️⃣ Require Blood (Recipient Request)\n\n"
             "👉 Reply with 1 or 2 to continue."
         )
