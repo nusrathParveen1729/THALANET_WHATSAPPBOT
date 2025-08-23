@@ -26,6 +26,6 @@ jobs:
       - name: Build Docker image
         run: docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/whatsapp-ai-bot:latest .
 
-      # Step 4: Push Docker image to ACR
+      # Step 4: Push Docker image to ACR#
       - name: Push Docker image
         run: docker push ${{ secrets.ACR_LOGIN_SERVER }}/whatsapp-ai-bot:latest
