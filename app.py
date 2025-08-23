@@ -13,7 +13,7 @@ from twilio.twiml.messaging_response import MessagingResponse
 load_dotenv()
 PORT = int(os.getenv("PORT", 5000))
 AZURE_DB_HOST = "whatsappbot.postgres.database.azure.com"
-AZURE_DB_NAME = "whatsappbot"
+AZURE_DB_NAME = "postgres"
 AZURE_DB_USER = "Thalabot"
 AZURE_DB_PASSWORD = os.getenv("AZURE_DB_PASSWORD")  # Set this in your .env
 AZURE_DB_PORT = 5432
