@@ -207,7 +207,7 @@ def ai_extract(user_msg: str, profile_name: str, session_state: dict, client, PR
     )
 
 # -------------------------------------------------
-# Database Queries
+# Database Queries#
 # -------------------------------------------------
 def insert_donor(payload):
     conn = get_db_conn()
