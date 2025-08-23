@@ -36,7 +36,7 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      # Step 6: Deploy to Azure Container Apps##
+      # Step 6: Deploy to Azure Container Apps###
       - name: Deploy to Azure Container App
         run: |
           az containerapp update \
