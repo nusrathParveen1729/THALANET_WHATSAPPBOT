@@ -51,7 +51,7 @@ def release_db_conn(conn):
     db_pool.putconn(conn)
 
 # -------------------------------------------------
-# Constants / dictionaries##
+# Constants / dictionaries#
 # -------------------------------------------------
 BLOODS = {"A+","A-","B+","B-","AB+","AB-","O+","O-"}
 BLOOD_SYNONYMS = {
