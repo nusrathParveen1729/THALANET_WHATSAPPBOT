@@ -433,7 +433,7 @@ def webhook():
         else:
             reply = (
                 f"❌ No donors found for {recipient_payload['blood_type']} in {recipient_payload['city']}.\n"
-                "We’ll notify you if someone becomes available. Meanwhile you can place an emergency request here --> https://thala-connect-ai-28.lovable.app/"
+                "We’ll notify you if someone becomes available. Meanwhile you can place an emergency request here --> https://delightful-beach-00c408a1e.2.azurestaticapps.net/"
             )
 
         sessions.pop(from_number, None)
