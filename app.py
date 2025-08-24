@@ -277,18 +277,21 @@ def webhook():
     print(f"📩 From {from_number} ({profile_name}): {body}")
 
     session = sessions.get(from_number) or {"role": None, "step": "start", "data": {}}
-
-    # --- Reset / Start ---
+ # --- Reset / Start ---
     if body.lower() in {"hi","hello","start","menu","restart"} or session.get("step") == "start":
         sessions[from_number] = {"role": None, "step": "choose_role", "data": {}}
+        # Try to extract name from initial message using AI
+        ai, _ = ai_extract(body, profile_name, session, client, PREFERRED_MODEL)
+        user_name = ai.get("full_name") or profile_name
+        greeting = f"👋😊 Hi {user_name}, I am Thalanet Bot. How may I help you?\n\n"
         return twiml_reply(
-            "👋 Hi, how may I help you?\n\n"
+            greeting +
             "Please classify yourself:\n"
-            "1️⃣ Donor (Eligible for Govt. tax benefit 💸)\n"
-            "2️⃣ Require Blood (Recipient Request)\n"
-            "3️⃣ FAQ (Frequently Asked Questions)\n\n"
-            "👉 Reply with 1, 2 or 3 to continue."
+            "1️⃣ Donor\n"
+            "2️⃣ Require Blood (Recipient Request)\n\n"
+            "👉 Reply with 1 or 2 to continue."
         )
+
 
     # --- Choose role (supports numbers or words) ---
     if session.get("step") == "choose_role":
