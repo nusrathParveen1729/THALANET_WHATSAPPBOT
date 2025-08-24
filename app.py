@@ -284,13 +284,14 @@ def webhook():
         ai, _ = ai_extract(body, profile_name, session, client, PREFERRED_MODEL)
         user_name = ai.get("full_name") or profile_name
         greeting = f"👋😊 Hi {user_name}, I am Thalanet Bot. How may I help you?\n\n"
-        return twiml_reply(
-            greeting +
-            "Please classify yourself:\n"
-            "1️⃣ Donor\n"
-            "2️⃣ Require Blood (Recipient Request)\n\n"
-            "👉 Reply with 1 or 2 to continue."
-        )
+            return twiml_reply(
+                greeting +
+                "Please classify yourself:\n"
+                "1️⃣ Donor\n"
+                "2️⃣ Require Blood (Recipient Request)\n"
+                "3️⃣ FAQ (Frequently Asked Questions)\n\n"
+                "👉 Reply with 1, 2 or 3 to continue."
+            )
 
 
     # --- Choose role (supports numbers or words) ---
