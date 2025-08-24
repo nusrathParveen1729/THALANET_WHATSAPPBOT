@@ -438,7 +438,7 @@ def webhook():
             )
 
         sessions.pop(from_number, None)
-        return twiml_reply(reply)
+        return twiml_reply(reply)#
 
     sessions[from_number] = session
     return twiml_reply("I didn’t catch that. Reply 1 for Donor or 2 for Require Blood.")
